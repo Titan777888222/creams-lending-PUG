@@ -2,13 +2,15 @@
 
 const gulp = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
-const concat = require('gulp-concat');const autoprefixer = require('autoprefixer');
-const postcss = require('gulp-postcss');const browserSync = require('browser-sync').create();
+const concat = require('gulp-concat');
+const autoprefixer = require('autoprefixer');
+const postcss = require('gulp-postcss');
+const browserSync = require('browser-sync').create();
 const del = require('del');
 const pug = require('gulp-pug');
 
 gulp.task('pug', function(){
-    return gulp.src('app/*.pug')
+    return gulp.src('app/*.pug', 'app/*.html')
     .pipe(pug({
         pretty: true
     }))
@@ -48,10 +50,11 @@ gulp.task('watch', function(){
 });
 
 gulp.task('serve', function(){    browserSync.init({
-       server: 'public'
- });
+    server: 'public'
+});
 
 browserSync.watch('public/**/*.*').on('change', browserSync.reload);});
+
 
 gulp.task('dev', gulp.series('build', gulp.parallel('watch', 'serve')));
 
